@@ -1,0 +1,46 @@
+<h1>Listing Records</h1>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Player</th>
+      <th>Team</th>
+      <th>Position</th>
+      <th>Avg rushing attempts per game</th>
+      <th>Total rushing yards</th>
+      <th>Avg rushing yards per attempt</th>
+      <th>Rushing yards per game</th>
+      <th>Total rushing touchdowns</th>
+      <th>Longest rush</th>
+      <th>Rushing first downs</th>
+      <th>Rushing first down percentage</th>
+      <th>Rushing 20 plus yards each</th>
+      <th>Rushing 40 plus yards each</th>
+      <th>Rushing fumbles</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="records">
+    <%= for record <- @records do %>
+      <tr id={"record-#{record.id}"}>
+        <td><%= record.player %></td>
+        <td><%= record.team %></td>
+        <td><%= record.position %></td>
+        <td><%= record.avg_rushing_attempts_per_game %></td>
+        <td><%= record.total_rushing_yards %></td>
+        <td><%= record.avg_rushing_yards_per_attempt %></td>
+        <td><%= record.rushing_yards_per_game %></td>
+        <td><%= record.total_rushing_touchdowns %></td>
+        <td><%= record.longest_rush %></td>
+        <td><%= record.rushing_first_downs %></td>
+        <td><%= record.rushing_first_down_percentage %></td>
+        <td><%= record.rushing_20_plus_yards_each %></td>
+        <td><%= record.rushing_40_plus_yards_each %></td>
+        <td><%= record.rushing_fumbles %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

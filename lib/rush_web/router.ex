@@ -17,7 +17,7 @@ defmodule RushWeb.Router do
   scope "/", RushWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live "/", RecordLive.Index, :index
   end
 
   # Other scopes may use custom stacks.
