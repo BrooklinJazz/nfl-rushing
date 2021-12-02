@@ -79,3 +79,17 @@ mix phx.server
 
 Navigate to localhost:4000. Observe The Application.
 
+## Features
+
+- search by player name
+- sort by total rushing yards, longest rush, and total rushing touchdowns
+- order by largest and smallest
+- download a csv of the current stats filtered and sorted.
+
+- comprehensive test suite
+- sorting of json into data base as Records (see record.ex)
+
+## How I would improve this with more time
+- Introduce pagination to effectivel handle 10K records (tested and does currently work, but it's very slow)
+- Introduce a factory with ExMachina and randomize the test data better.
+- Improve styling and wording.
