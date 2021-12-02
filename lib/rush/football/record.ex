@@ -6,7 +6,8 @@ defmodule Rush.Football.Record do
     field :rushing_attempts, :integer
     field :avg_rushing_attempts_per_game, :float
     field :avg_rushing_yards_per_attempt, :float
-    field :longest_rush, :string
+    field :longest_rush, :integer
+    field :longest_rush_resulted_in_touchdown, :boolean
     field :player, :string
     field :position, :string
     field :rushing_20_plus_yards_each, :integer
@@ -36,6 +37,7 @@ defmodule Rush.Football.Record do
       :rushing_yards_per_game,
       :total_rushing_touchdowns,
       :longest_rush,
+      :longest_rush_resulted_in_touchdown,
       :rushing_first_downs,
       :rushing_first_down_percentage,
       :rushing_20_plus_yards_each,
@@ -46,12 +48,14 @@ defmodule Rush.Football.Record do
       :player,
       :team,
       :position,
+      :rushing_attempts,
       :avg_rushing_attempts_per_game,
       :total_rushing_yards,
       :avg_rushing_yards_per_attempt,
       :rushing_yards_per_game,
       :total_rushing_touchdowns,
       :longest_rush,
+      :longest_rush_resulted_in_touchdown,
       :rushing_first_downs,
       :rushing_first_down_percentage,
       :rushing_20_plus_yards_each,

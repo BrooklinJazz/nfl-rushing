@@ -63,9 +63,9 @@ defmodule Rush.FootballTest do
     end
 
     test "list_records/1 sort by longest_rush" do
-      s = record_fixture(%{longest_rush: "1T"})
-      m = record_fixture(%{longest_rush: "2T"})
-      l = record_fixture(%{longest_rush: "3"})
+      s = record_fixture(%{longest_rush: 1})
+      m = record_fixture(%{longest_rush: 2})
+      l = record_fixture(%{longest_rush: 3})
 
       assert Football.list_records(%{sort_by: :longest_rush}) == [s, m, l]
 
@@ -102,11 +102,13 @@ defmodule Rush.FootballTest do
       valid_attrs = %{
         avg_rushing_attempts_per_game: 120.5,
         avg_rushing_yards_per_attempt: 120.5,
-        longest_rush: "some longest_rush",
+        longest_rush: 456,
+        longest_rush_resulted_in_touchdown: true,
         player: "some player",
         position: "some position",
         rushing_20_plus_yards_each: 42,
         rushing_40_plus_yards_each: 42,
+        rushing_attempts: 42,
         rushing_first_down_percentage: 120.5,
         rushing_first_downs: 42,
         rushing_fumbles: 42,
@@ -117,7 +119,25 @@ defmodule Rush.FootballTest do
       }
 
       assert {:ok, %Record{} = record} = Football.create_record(valid_attrs)
-      assert match?(valid_attrs, record)
+
+      assert %{
+               avg_rushing_attempts_per_game: 120.5,
+               avg_rushing_yards_per_attempt: 120.5,
+               longest_rush: 456,
+               longest_rush_resulted_in_touchdown: true,
+               player: "some player",
+               position: "some position",
+               rushing_20_plus_yards_each: 42,
+               rushing_40_plus_yards_each: 42,
+               rushing_attempts: 42,
+               rushing_first_down_percentage: 120.5,
+               rushing_first_downs: 42,
+               rushing_fumbles: 42,
+               rushing_yards_per_game: 120.5,
+               team: "some team",
+               total_rushing_touchdowns: 42,
+               total_rushing_yards: 42
+             } = record
     end
 
     test "create_record/1 with invalid data returns error changeset" do
@@ -129,11 +149,21 @@ defmodule Rush.FootballTest do
       csv = Football.generate_csv([record])
 
       record
-      |> Map.drop([:__meta__, :updated_at, :inserted_at, :__struct__, :id])
+      |> Map.drop([
+        :__meta__,
+        :updated_at,
+        :inserted_at,
+        :__struct__,
+        :id,
+        :longest_rush_resulted_in_touchdown,
+        :longest_rush
+      ])
       |> Map.values()
       |> Enum.each(fn value ->
         assert csv =~ "#{value}"
       end)
+
+      assert csv =~ "#{record.longest_rush}T"
     end
   end
 end

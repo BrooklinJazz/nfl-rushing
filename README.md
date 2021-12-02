@@ -54,8 +54,28 @@ We will evaluate you on your ability to solve the problem defined in the require
 If you have any questions regarding requirements, do not hesitate to email your contact at theScore for clarification.
 
 ### Installation and running this solution
-get dependencies
+First, Ensure that postgresql is running, and that you have elixir and erlang installed.
+
+Install Dependencies
 ```
 mix deps.get
 ```
+
+Ensure tests pass
+```
+mix test
+```
+
+Run seeds
+```
+mix run priv/repo/seeds.exs
+```
+
+Start the Phoenix Server.
+
+```
+mix phx.server
+```
+
+Navigate to localhost:4000. Observe The Application.
 

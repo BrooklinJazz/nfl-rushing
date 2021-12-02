@@ -37,7 +37,7 @@ defmodule Rush.Football do
   """
 
   def list_records(opts \\ %{}) do
-    opts = Map.merge(%{player: nil, sort_by: nil, order_by: :smallest}, opts)
+    opts = Map.merge(%{player: nil, sort_by: nil, order_by: nil}, opts)
 
     from(Record)
     |> filter(opts.player)
@@ -54,6 +54,7 @@ defmodule Rush.Football do
     end
   end
 
+  defp order(query, nil), do: query
   defp order(query, :smallest), do: query
   defp order(query, :largest), do: reverse_order(query)
 
@@ -83,7 +84,7 @@ defmodule Rush.Football do
           "#{each.avg_rushing_yards_per_attempt}," <>
           "#{each.rushing_yards_per_game}," <>
           "#{each.total_rushing_touchdowns}," <>
-          "#{each.longest_rush}," <>
+          "#{each.longest_rush}#{if each.longest_rush_resulted_in_touchdown, do: "T", else: ""}," <>
           "#{each.rushing_first_downs}," <>
           "#{each.rushing_first_down_percentage}," <>
           "#{each.rushing_20_plus_yards_each}," <>

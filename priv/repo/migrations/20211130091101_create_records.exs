@@ -12,7 +12,8 @@ defmodule Rush.Repo.Migrations.CreateRecords do
       add :avg_rushing_yards_per_attempt, :float
       add :rushing_yards_per_game, :float
       add :total_rushing_touchdowns, :integer
-      add :longest_rush, :string
+      add :longest_rush, :integer
+      add :longest_rush_resulted_in_touchdown, :boolean
       add :rushing_first_downs, :integer
       add :rushing_first_down_percentage, :float
       add :rushing_20_plus_yards_each, :integer

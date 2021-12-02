@@ -18,4 +18,20 @@ defmodule RushWeb.RecordLive.Index do
     records = Football.list_records(%{player: params["filter"]["player"]})
     {:noreply, assign(socket, records: records, csv: generate_csv(records))}
   end
+
+  def handle_event("sort", params, socket) do
+    records =
+      Football.list_records(%{
+        sort_by: sort_value(params["sort"]["sort_by"]),
+        order_by: sort_value(params["sort"]["order_by"])
+      })
+
+    {:noreply, assign(socket, records: records, csv: generate_csv(records))}
+  end
+
+  defp sort_value(value) do
+    unless value == "" do
+      String.to_existing_atom(value)
+    end
+  end
 end
