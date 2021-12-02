@@ -15,7 +15,6 @@ defmodule RushWeb.RecordLiveTest do
     test "lists all records", %{conn: conn, record: record} do
       {:ok, _index_live, html} = live(conn, Routes.record_index_path(conn, :index))
 
-      assert html =~ "Listing Records"
       assert html =~ record.player
     end
 

@@ -85,9 +85,10 @@ Navigate to localhost:4000. Observe The Application.
 - sort by total rushing yards, longest rush, and total rushing touchdowns
 - order by largest and smallest
 - download a csv of the current stats filtered and sorted.
-
 - comprehensive test suite
 - sorting of json into data base as Records (see record.ex)
+
+![](application_example.PNG)
 
 ## How I would improve this with more time
 - Introduce pagination to handle 10K records (I tested this with seed data and it does currently work, but it's very slow)
