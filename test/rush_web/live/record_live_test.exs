@@ -18,5 +18,15 @@ defmodule RushWeb.RecordLiveTest do
       assert html =~ "Listing Records"
       assert html =~ record.longest_rush
     end
+
+    test "filters records by player name", %{conn: conn, record: record} do
+      {:ok, view, html} = live(conn, Routes.record_index_path(conn, :index))
+
+      assert view |> render_change("filter", %{"filter" => %{"player" => record.player}}) =~
+               record.longest_rush
+
+      refute view |> render_change("filter", %{"filter" => %{"player" => "invalid name"}}) =~
+               record.longest_rush
+    end
   end
 end

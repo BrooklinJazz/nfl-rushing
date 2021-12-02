@@ -32,10 +32,70 @@ defmodule Rush.FootballTest do
 
     test "list_records/1 filter by player name" do
       record = record_fixture()
+
       assert Football.list_records(%{player: record.player}) == [record]
+      assert Football.list_records(%{player: String.capitalize(record.player)}) == [record]
+      assert Football.list_records(%{player: String.first(record.player)}) == [record]
+      assert Football.list_records(%{player: String.last(record.player)}) == [record]
+
       assert Football.list_records(%{player: ""}) == [record]
       assert Football.list_records(%{player: nil}) == [record]
       assert Football.list_records(%{player: "invalid_name"}) == []
+    end
+
+    test "list_records/1 sort by total rushing yards" do
+      # "_Total Rushing Yards_, _Longest Rush_ and _Total Rushing Touchdowns_"
+      s = record_fixture(%{total_rushing_yards: 0})
+      m = record_fixture(%{total_rushing_yards: 1})
+      l = record_fixture(%{total_rushing_yards: 2})
+
+      assert Football.list_records(%{sort_by: :total_rushing_yards}) == [s, m, l]
+
+      assert Football.list_records(%{
+               sort_by: :total_rushing_yards,
+               order_by: :smallest
+             }) == [s, m, l]
+
+      assert Football.list_records(%{
+               sort_by: :total_rushing_yards,
+               order_by: :largest
+             }) == [l, m, s]
+    end
+
+    test "list_records/1 sort by longest_rush" do
+      s = record_fixture(%{longest_rush: "1T"})
+      m = record_fixture(%{longest_rush: "2T"})
+      l = record_fixture(%{longest_rush: "3"})
+
+      assert Football.list_records(%{sort_by: :longest_rush}) == [s, m, l]
+
+      assert Football.list_records(%{
+               sort_by: :longest_rush,
+               order_by: :smallest
+             }) == [s, m, l]
+
+      assert Football.list_records(%{
+               sort_by: :longest_rush,
+               order_by: :largest
+             }) == [l, m, s]
+    end
+
+    test "list_records/1 sort by total_rushing_touchdowns" do
+      s = record_fixture(%{total_rushing_touchdowns: 0})
+      m = record_fixture(%{total_rushing_touchdowns: 1})
+      l = record_fixture(%{total_rushing_touchdowns: 2})
+
+      assert Football.list_records(%{sort_by: :total_rushing_touchdowns}) == [s, m, l]
+
+      assert Football.list_records(%{
+               sort_by: :total_rushing_touchdowns,
+               order_by: :smallest
+             }) == [s, m, l]
+
+      assert Football.list_records(%{
+               sort_by: :total_rushing_touchdowns,
+               order_by: :largest
+             }) == [l, m, s]
     end
 
     test "create_record/1 with valid data creates a record" do

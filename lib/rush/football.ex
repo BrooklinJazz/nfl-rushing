@@ -35,21 +35,39 @@ defmodule Rush.Football do
       [%Record{}, ...]
 
   """
-  def list_records do
-    Repo.all(Record)
-  end
 
-  def list_records(filters) do
+  def list_records(opts \\ %{}) do
+    opts = Map.merge(%{player: nil, sort_by: nil, order_by: :smallest}, opts)
+
     from(Record)
-    |> apply_filters(filters)
+    |> filter(opts.player)
+    |> sort_by(opts.sort_by)
+    |> order(opts.order_by)
     |> Repo.all()
   end
 
-  defp apply_filters(query, filters) do
-    case filters.player do
-      "" -> query
-      nil -> query
-      player_name -> where(query, [record], record.player == ^player_name)
+  def sort_by(query, field) do
+    if field do
+      order_by(query, [record], field(record, ^field))
+    else
+      query
+    end
+  end
+
+  defp order(query, :smallest), do: query
+  defp order(query, :largest), do: reverse_order(query)
+
+  defp filter(query, player) do
+    case player do
+      "" ->
+        query
+
+      nil ->
+        query
+
+      player ->
+        search_filter = "%#{player}%"
+        where(query, [record], ilike(record.player, ^search_filter))
     end
   end
 

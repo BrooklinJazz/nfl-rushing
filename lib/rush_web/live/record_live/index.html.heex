@@ -3,6 +3,9 @@
 
 <table>
   <a href={"data:attachment/csv,#{generate_csv(@records)}"} download='records.csv'>Download CSV</a>
+  <.form let={f} for={:filter} phx-change="filter">
+    <%= text_input f, :player %>
+  </.form>
   <thead>
     <tr>
       <th>Player</th>
