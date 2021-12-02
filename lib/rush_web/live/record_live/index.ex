@@ -5,10 +5,15 @@ defmodule RushWeb.RecordLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :records, list_records())}
+    records = list_records()
+    {:ok, assign(socket, records: list_records(), csv: generate_csv(records))}
   end
 
   defp list_records do
     Football.list_records()
+  end
+
+  defp generate_csv(records) do
+    Football.generate_csv(records)
   end
 end

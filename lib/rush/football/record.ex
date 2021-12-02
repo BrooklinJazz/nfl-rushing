@@ -3,6 +3,7 @@ defmodule Rush.Football.Record do
   import Ecto.Changeset
 
   schema "records" do
+    field :rushing_attempts, :integer
     field :avg_rushing_attempts_per_game, :float
     field :avg_rushing_yards_per_attempt, :float
     field :longest_rush, :string
@@ -24,7 +25,38 @@ defmodule Rush.Football.Record do
   @doc false
   def changeset(record, attrs) do
     record
-    |> cast(attrs, [:player, :team, :position, :avg_rushing_attempts_per_game, :total_rushing_yards, :avg_rushing_yards_per_attempt, :rushing_yards_per_game, :total_rushing_touchdowns, :longest_rush, :rushing_first_downs, :rushing_first_down_percentage, :rushing_20_plus_yards_each, :rushing_40_plus_yards_each, :rushing_fumbles])
-    |> validate_required([:player, :team, :position, :avg_rushing_attempts_per_game, :total_rushing_yards, :avg_rushing_yards_per_attempt, :rushing_yards_per_game, :total_rushing_touchdowns, :longest_rush, :rushing_first_downs, :rushing_first_down_percentage, :rushing_20_plus_yards_each, :rushing_40_plus_yards_each, :rushing_fumbles])
+    |> cast(attrs, [
+      :player,
+      :team,
+      :position,
+      :rushing_attempts,
+      :avg_rushing_attempts_per_game,
+      :total_rushing_yards,
+      :avg_rushing_yards_per_attempt,
+      :rushing_yards_per_game,
+      :total_rushing_touchdowns,
+      :longest_rush,
+      :rushing_first_downs,
+      :rushing_first_down_percentage,
+      :rushing_20_plus_yards_each,
+      :rushing_40_plus_yards_each,
+      :rushing_fumbles
+    ])
+    |> validate_required([
+      :player,
+      :team,
+      :position,
+      :avg_rushing_attempts_per_game,
+      :total_rushing_yards,
+      :avg_rushing_yards_per_attempt,
+      :rushing_yards_per_game,
+      :total_rushing_touchdowns,
+      :longest_rush,
+      :rushing_first_downs,
+      :rushing_first_down_percentage,
+      :rushing_20_plus_yards_each,
+      :rushing_40_plus_yards_each,
+      :rushing_fumbles
+    ])
   end
 end

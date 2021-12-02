@@ -11,6 +11,7 @@ defmodule Rush.FootballFixtures do
     {:ok, record} =
       attrs
       |> Enum.into(%{
+        rushing_attempts: 456,
         avg_rushing_attempts_per_game: 120.5,
         avg_rushing_yards_per_attempt: 120.5,
         longest_rush: "some longest_rush",

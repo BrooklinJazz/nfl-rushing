@@ -6,6 +6,7 @@ defmodule Rush.Repo.Migrations.CreateRecords do
       add :player, :string
       add :team, :string
       add :position, :string
+      add :rushing_attempts, :integer
       add :avg_rushing_attempts_per_game, :float
       add :total_rushing_yards, :integer
       add :avg_rushing_yards_per_attempt, :float

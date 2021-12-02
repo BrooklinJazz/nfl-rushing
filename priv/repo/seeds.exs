@@ -21,6 +21,7 @@ with {:ok, body} <- File.read("rushing.json"),
       if is_integer(each["Lng"]), do: Integer.to_string(each["Lng"]), else: each["Lng"]
 
     Rush.Repo.insert!(%Rush.Football.Record{
+      rushing_attempts: each["Att"],
       avg_rushing_attempts_per_game: each["Att/G"] / 1,
       avg_rushing_yards_per_attempt: each["Avg"] / 1,
       longest_rush: longest_rush,
