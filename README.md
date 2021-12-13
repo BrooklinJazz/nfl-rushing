@@ -94,3 +94,4 @@ Navigate to localhost:4000. Observe The Application.
 - Introduce pagination to handle 10K records (I tested this with seed data and it does currently work, but it's very slow)
 - Introduce a factory with ExMachina and randomize the test data better.
 - Improve styling and wording.
+- optimize CSV generation
