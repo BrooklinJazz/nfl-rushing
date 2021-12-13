@@ -6,7 +6,15 @@ defmodule RushWeb.RecordLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     records = Football.list_records()
-    {:ok, assign(socket, records: records, csv: generate_csv(records))}
+
+    {:ok,
+     assign(socket,
+       order_by: nil,
+       sort_by: nil,
+       player: "",
+       records: records,
+       csv: generate_csv(records)
+     )}
   end
 
   defp generate_csv(records) do
@@ -14,23 +22,29 @@ defmodule RushWeb.RecordLive.Index do
   end
 
   @impl true
-  def handle_event("filter", params, socket) do
-    records = Football.list_records(%{player: params["filter"]["player"]})
-    {:noreply, assign(socket, records: records, csv: generate_csv(records))}
+  def handle_event("filter", %{"filter" => %{"player" => player}}, socket) do
+    {:noreply, assign(socket, player: player) |> load_records()}
   end
 
-  def handle_event("sort", params, socket) do
+  def handle_event("sort", %{"sort" => %{"sort_by" => sort_by, "order_by" => order_by}}, socket) do
+    {:noreply, assign(socket, sort_by: sort_by, order_by: order_by) |> load_records()}
+  end
+
+  def load_records(socket) do
+    %{sort_by: sort_by, order_by: order_by, player: player} = socket.assigns
+
     records =
       Football.list_records(%{
-        sort_by: sort_value(params["sort"]["sort_by"]),
-        order_by: sort_value(params["sort"]["order_by"])
+        sort_by: maybe_to_atom(sort_by),
+        order_by: maybe_to_atom(order_by),
+        player: player
       })
 
-    {:noreply, assign(socket, records: records, csv: generate_csv(records))}
+    assign(socket, records: records, csv: generate_csv(records))
   end
 
-  defp sort_value(value) do
-    unless value == "" do
+  defp maybe_to_atom(value) do
+    unless value == "" || !value do
       String.to_existing_atom(value)
     end
   end
