@@ -46,6 +46,24 @@ defmodule Rush.Football do
     |> Repo.all()
   end
 
+  def team_records() do
+    list_records()
+    |> Enum.reduce(%{}, fn each, acc ->
+      team = Map.get(acc, each.team, %{"total_rushing_yards" => 0})
+
+      Map.put(acc, each.team, %{
+        team
+        | "total_rushing_yards" => team["total_rushing_yards"] + each.total_rushing_yards
+      })
+    end)
+    |> Enum.sort_by(
+      fn {_, %{"total_rushing_yards" => total_rushing_yards}} ->
+        total_rushing_yards
+      end,
+      :desc
+    )
+  end
+
   def sort_by(query, field) do
     if field do
       order_by(query, [record], field(record, ^field))

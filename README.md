@@ -95,3 +95,13 @@ Navigate to localhost:4000. Observe The Application.
 - Introduce a factory with ExMachina and randomize the test data better.
 - Improve styling and wording.
 - optimize CSV generation
+
+# Teams
+- page displaying all teams sorted from highest total rushing yards to lowest
+- (optional) add some others stats or tests.
+
+player -> teams
+
+reduce -> players
+
+%{team: "", ...aggregated stats}

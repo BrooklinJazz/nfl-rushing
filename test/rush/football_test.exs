@@ -30,6 +30,44 @@ defmodule Rush.FootballTest do
       assert Football.list_records() == [record]
     end
 
+    test "list_teams/0 returns all records _ one record" do
+      record = record_fixture()
+      total_rushing_yards = record.total_rushing_yards
+
+      expected = %{
+        "#{record.team}" => %{
+          "total_rushing_yards" => total_rushing_yards
+        }
+      }
+
+      assert ^expected = Football.team_records()
+    end
+
+    test "list_teams/0 returns all records _ 2 records" do
+      record = record_fixture(total_rushing_yards: 0)
+      other_record = record_fixture(%{team: "different_team", total_rushing_yards: 1})
+      total_rushing_yards = record.total_rushing_yards
+
+      expected = [
+        {"#{other_record.team}", %{"total_rushing_yards" => 1}},
+        {"#{record.team}", %{"total_rushing_yards" => 0}}
+      ]
+
+      assert ^expected = Football.team_records()
+    end
+
+    test "list_teams/0 returns all records _ 2 records from players on same team" do
+      record = record_fixture(team: "same", total_rushing_yards: 1)
+      other_record = record_fixture(%{team: "same", total_rushing_yards: 1})
+      total_rushing_yards = record.total_rushing_yards
+
+      expected = [
+        {"#{record.team}", %{"total_rushing_yards" => 2}}
+      ]
+
+      assert ^expected = Football.team_records()
+    end
+
     test "list_records/1 filter by player name" do
       record = record_fixture()
 

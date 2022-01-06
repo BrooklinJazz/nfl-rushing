@@ -18,6 +18,7 @@ defmodule RushWeb.Router do
     pipe_through :browser
 
     live "/", RecordLive.Index, :index
+    live "/team", TeamLive.Index, :index
   end
 
   # Other scopes may use custom stacks.
